@@ -41,6 +41,10 @@ dependencies:
   flutter_switch:
   device_preview:
 
+  flutter_polyline_points: ^1.0.0
+  google_maps_flutter: ^2.1.7
+  location:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:auto_mynds/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_switch/flutter_switch.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,6 +15,61 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   bool _light = false;
+  bool isOpened = false;
+
+
+  var socData;
+
+  @override
+  void initState() {
+    socData = [
+      {
+        'name': 'John Doe',
+        'location': 'Hospital A',
+        'time': '10:00 AM',
+        'image': 'assets/Images/patient.png',
+        'info': 'tap to know more.',
+        'outlineButtonName' : 'Start',
+        'coloredButtonName' : 'Discharge',
+        'date':'Wed Jun 20',
+      },
+
+      {
+        'name': 'shruti',
+        'location': 'Hospital A',
+        'time': '10:00 AM',
+        'image': 'assets/Images/patient.png',
+        'info': 'tap to know more.',
+        'outlineButtonName' : 'Start',
+        'coloredButtonName' : 'Eval',
+        'date':'Wed Jun 20',
+      },
+
+      {
+        'name': 'anas',
+        'location': 'Hospital A',
+        'time': '10:00 AM',
+        'image': 'assets/Images/patient.png',
+        'info': 'tap to know more.',
+        'outlineButtonName' : 'Start',
+        'coloredButtonName' : 'Follow-up',
+        'date':'Wed Jun 20',
+      },
+
+      {
+        'name': 'anas',
+        'location' : '1036 Florida 50',
+        'time': '10:00 AM',
+        'image': 'assets/Images/patient.png',
+        'info' : 'Client was referred by Mercy Hospital , lives with his family  of 4 kids and 1 pet dog.',
+        'outlineButtonName' : 'Start',
+        'coloredButtonName' : 'Reassessment',
+        'date':'Wed Jun 20',
+      },
+
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +104,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      calender(),
-                      SizedBox(
-                        width: 24.w,
-                      ),
-                      weather(),
-                      SizedBox(
-                        width: 24.w,
-                      ),
-                      profileButton(),
-                    ],
+                  Spacer(
+                    flex: 4,
                   ),
+                  calender(),
+                  Spacer(
+                    flex: 1,
+                  ),
+                  weather(),
+                  Spacer(
+                    flex: 1,
+                  ),
+                  profileButton(),
                 ],
               ),
               SizedBox(
@@ -95,19 +147,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Row(
                 children: [
-                  Expanded(child: tV()),
+                  Expanded(child: vContainer(visitDetail: "Today’s visit",
+                      count: "10",
+                      svgPath: "assets/svgIcons/write.svg")),
                   SizedBox(
                     width: 16.w,
                   ),
-                  Expanded(child: cV()),
+                  Expanded(child: vContainer(visitDetail: "Completed Visits",
+                      count: "10",
+                      svgPath: "assets/svgIcons/check.svg")),
                   SizedBox(
                     width: 16.w,
                   ),
-                  Expanded(child: aV()),
+                  Expanded(child: vContainer(visitDetail: "Average Visit",
+                      count: "10",
+                      svgPath: "assets/svgIcons/clock.svg")),
                   SizedBox(
                     width: 16.w,
                   ),
-                  Expanded(child: oC()),
+                  Expanded(child: vContainer(visitDetail: "Open Charts",
+                      count: "10",
+                      svgPath: "assets/svgIcons/notes.svg")),
                 ],
               ),
               SizedBox(
@@ -120,37 +180,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: white.withOpacity(.36),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Column(
+
+                child:
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     button(),
+
                     SizedBox(
                       height: 24.h,
                     ),
-                    Soc(),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    Schedule("Emily Thompson", "Follow-up","Start", green),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    Schedule("Shruti Saini", "Follow-up", "Start" ,green),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    Schedule("Mohd Anas", "Reassessment","Start", blue),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    Schedule("Rohit", "Eval", "Start" ,yellow),
+
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: socData.length,
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (context,index){
+                          return isOpened==true ? soc(index: index) : listSchedule(index: index);
+                        }),
                   ],
                 ),
               ),
+
               SizedBox(
                 height: 24.h,
               ),
-
             ],
           ),
         ),
@@ -160,9 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget driveMode() {
     return Container(
-      height: 32.h,
-      width: 144.w,
-      padding: EdgeInsets.only(left: 10.w, top: 8.h, bottom: 8.h),
+      padding: EdgeInsets.only(left: 10.w, top: 10.h, bottom: 10.h),
       decoration: BoxDecoration(
         color: white.withOpacity(.36),
         border: Border.all(color: white, width: 1),
@@ -181,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
             scale: .6,
             child: CupertinoSwitch(
               value: _light,
-              activeColor: Color(0xffF6C46E),
+              activeColor: green,
               onChanged: (bool val) {
                 setState(() {
                   _light = val;
@@ -193,517 +245,215 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
 
-Widget calender() {
-  return Row(
-    children: [
-      SvgPicture.asset(
-        "assets/svgIcons/calender.svg",
-        height: 24.h,
-        width: 24.w,
-      ),
-      SizedBox(
-        width: 4.w,
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "2nd Dec",
-            style: TextStyle(
-                fontSize: 16.sp, color: grey, fontFamily: "poppinsRegular"),
-          ),
-          Text(
-            "2024, Wed",
-            style: TextStyle(
-                fontSize: 12.sp, color: grey, fontFamily: "poppinsLight"),
-          ),
-        ],
-      )
-    ],
-  );
-}
+  Widget soc({required int index}) {
+    Map getColor =
+      {
+        'Follow-up': green,
+        'Reassessment': blue,
+        'Eval': yellow,
+        'Discharge': red,
+      };
 
-Widget weather() {
-  return Row(
-    children: [
-      SvgPicture.asset(
-        "assets/svgIcons/weather.svg",
-        height: 24.h,
-        width: 24.w,
-      ),
-      SizedBox(
-        width: 4.w,
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "14.46°C ",
-            style: TextStyle(
-                fontSize: 16.sp, color: grey, fontFamily: "poppinsRegular"),
-          ),
-          Text(
-            "Broken clouds",
-            style: TextStyle(
-                fontSize: 12.sp, color: grey, fontFamily: "poppinsLight"),
-          ),
-        ],
-      )
-    ],
-  );
-}
-
-Widget profileButton() {
-  return Container(
-    height: 42.h,
-    width: 170.w,
-    padding: EdgeInsets.all(4),
-    decoration: BoxDecoration(
-      color: white.withOpacity(.20),
-      border: Border.all(color: white, width: 1),
-      borderRadius: BorderRadius.circular(14.r),
-    ),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: white,
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.r),
-                child: Image.asset(
-                  "assets/Images/women1.png",
-                  scale: 2,
-                ))),
-        SizedBox(
-          width: 4.w,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Jane Smith",
-              style: TextStyle(
-                  fontSize: 12.sp, fontFamily: "poppinsRegular", color: black),
-            ),
-            Text(
-              "PT",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 34.w,
-        ),
-        SvgPicture.asset(
-          "assets/svgIcons/scrollDown.svg",
-          color: grey,
-          height: 6.h,
-          width: 13.w,
-        ),
-      ],
-    ),
-  );
-}
-
-Widget navDrawerButton() {
-  return Container(
-    height: 32.h,
-    width: 32.w,
-    padding: EdgeInsets.all(8),
-    decoration: BoxDecoration(
-      color: white.withOpacity(.20),
-      border: Border.all(color: white, width: 1),
-      borderRadius: BorderRadius.circular(8.r),
-    ),
-    child: SvgPicture.asset(
-      "assets/svgIcons/filter.svg",
-      width: 10.32.w,
-      height: 8.26,
-    ),
-  );
-}
-
-Widget tV() {
-  return Container(
-    height: 48.h,
-    padding: EdgeInsets.all(9),
-    decoration: BoxDecoration(
-      color: white.withOpacity(.20),
-      border: Border.all(color: white, width: 1),
-      borderRadius: BorderRadius.circular(12.r),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Today’s visit",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
-            ),
-            Text(
-              "10",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
-            )
-          ],
-        ),
-        SvgPicture.asset(
-          "assets/svgIcons/write.svg",
-          height: 32.h,
-          width: 32.w,
-        )
-      ],
-    ),
-  );
-}
-
-Widget cV() {
-  return Container(
-    height: 48.h,
-    padding: EdgeInsets.all(9),
-    decoration: BoxDecoration(
-      color: white.withOpacity(.20),
-      border: Border.all(color: white, width: 1),
-      borderRadius: BorderRadius.circular(12.r),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Completed Visits",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
-            ),
-            Text(
-              "10",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
-            )
-          ],
-        ),
-        SvgPicture.asset(
-          "assets/svgIcons/check.svg",
-          height: 32.h,
-          width: 32.w,
-        )
-      ],
-    ),
-  );
-}
-
-Widget aV() {
-  return Container(
-    height: 48.h,
-    padding: EdgeInsets.all(9),
-    decoration: BoxDecoration(
-      color: white.withOpacity(.20),
-      border: Border.all(color: white, width: 1),
-      borderRadius: BorderRadius.circular(12.r),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Average Visit",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
-            ),
-            Text(
-              "10",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
-            )
-          ],
-        ),
-        SvgPicture.asset(
-          "assets/svgIcons/clock.svg",
-          height: 32.h,
-          width: 32.w,
-        )
-      ],
-    ),
-  );
-}
-
-Widget oC() {
-  return Container(
-    height: 48.h,
-    padding: EdgeInsets.all(9),
-    decoration: BoxDecoration(
-      color: white.withOpacity(.20),
-      border: Border.all(color: white, width: 1),
-      borderRadius: BorderRadius.circular(12.r),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Open Charts",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
-            ),
-            Text(
-              "10",
-              style: TextStyle(
-                  fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
-            )
-          ],
-        ),
-        SvgPicture.asset(
-          "assets/svgIcons/notes.svg",
-          height: 32.h,
-          width: 32.w,
-        )
-      ],
-    ),
-  );
-}
-
-Widget button() {
-  return Container(
-    height: 38.h,
-    width: 121.w,
-    padding: EdgeInsets.all(9),
-    decoration: BoxDecoration(
-      color: green,
-      border: Border.all(color: white, width: 1),
-      borderRadius: BorderRadius.circular(12.r),
-    ),
-    child: Center(
-        child: Text(
-      "Upcoming",
-      style: TextStyle(
-          fontSize: 14.sp, fontFamily: "poppinsRegular", color: white),
-    )),
-  );
-}
-
-Widget SOC() {
-  return Stack(children: [
-    Container(
-      height: 272.h,
-      width: 656.w,
+    return Container(
+      margin: EdgeInsets.only(bottom: 16.h),
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: grey1, width: 1),
       ),
-    ),
-    Container(
-      height: 68.h,
-      width: 656.w,
-      decoration: BoxDecoration(
-          color: green,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12), topRight: Radius.circular(12))),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  "SOC",
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      fontFamily: "poppinsRegular",
-                      color: white),
-                ),
-                SizedBox(
-                  width: 559.w,
-                ),
-                SvgPicture.asset(
-                  "assets/svgIcons/threeDots.svg",
-                  width: 3.w,
-                  height: 15.h,
-                  color: white,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  "assets/svgIcons/calenderOutlined.svg",
-                  height: 12.h,
-                  width: 12.w,
-                ),
-                SizedBox(
-                  width: 3.w,
-                ),
-                Text("Wed Jun 20 - 08:00 AM",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: "poppinsRegular",
-                        color: white)),
-                SizedBox(
-                  width: 21.w,
-                ),
-                SvgPicture.asset(
-                  "assets/svgIcons/location.svg",
-                  height: 12.h,
-                  width: 12.w,
-                ),
-                SizedBox(
-                  width: 3.w,
-                ),
-                Text("1036 Florida 50",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: "poppinsRegular",
-                        color: white)),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ),
-    Positioned(
-      top: 84.h,
-      right: 16.w,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 16.w,
-              ),
-              Container(
-                  height: 80.h,
-                  width: 80.w,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: white,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Image.asset(
-                        "assets/Images/patient.png",
-                        height: 44.h,
-                        width: 44.w,
-                        fit: BoxFit.fill,
-                      ))),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Emily Thompson",
-                      style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: "poppinsRegular",
-                          color: cyan)),
-                  Text("Patient",
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          fontFamily: "poppinsLight",
-                          color: black)),
-                ],
-              ),
-              SizedBox(
-                width: 268.w,
-              ),
-              Container(
-                height: 38.h,
-                width: 138.w,
-                decoration: BoxDecoration(
-                  color: cyan,
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Center(
-                    child: Text("Start",
-                        style: TextStyle(
-                            fontSize: 12.sp,
-                            fontFamily: "poppinsRegular",
-                            color: white))),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ),
-    Positioned(
-      top: 164.h,
-      left: 16.w,
-      right: 16.w,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 0.5.h,
-            width: 624.w,
-            color: black.withOpacity(.08),
+          InkWell(
+            onTap: (){
+              if(isOpened){
+                setState(() {
+                  isOpened = false;
+                });
+              }else{
+                setState(() {
+                  isOpened = true;
+                });
+              }
+            },
+            child: Container(
+              padding: EdgeInsets.fromLTRB(16.w, 16.h, 26.w, 16.h),
+              decoration: BoxDecoration(
+                  color: getColor[socData[index]['coloredButtonName']],
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "SOC",
+                        style: TextStyle(
+                            fontSize: 12.sp,
+                            fontFamily: "poppinsRegular",
+                            color: white),
+                      ),
+                      SvgPicture.asset(
+                        "assets/svgIcons/threeDots.svg",
+                        width: 3.w,
+                        height: 15.h,
+                        color: white,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/svgIcons/calenderOutlined.svg",
+                        height: 12.h,
+                        width: 12.w,
+                      ),
+                      SizedBox(
+                        width: 3.w,
+                      ),
+                      Text("${socData[index]['date']} - ${socData[index]['time']}",
+                          style: TextStyle(
+                              fontSize: 12.sp,
+                              fontFamily: "poppinsRegular",
+                              color: white)),
+                      SizedBox(
+                        width: 21.w,
+                      ),
+                      SvgPicture.asset(
+                        "assets/svgIcons/location.svg",
+                        height: 12.h,
+                        width: 12.w,
+                      ),
+                      SizedBox(
+                        width: 3.w,
+                      ),
+                      Text(socData[index]['location'],
+                          style: TextStyle(
+                              fontSize: 12.sp,
+                              fontFamily: "poppinsRegular",
+                              color: white)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
           SizedBox(
             height: 26.h,
           ),
-          Text(
-            "Appointment Note",
-            style: TextStyle(fontFamily: "poppinsRegular", fontSize: 14.sp),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                        height: 44.h,
+                        width: 44.w,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: white,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Image.asset(
+                              socData[index]['image'],
+                              scale: 2,
+                              fit: BoxFit.fill,
+                            ))),
+                    SizedBox(
+                      width: 16.w,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(socData[index]['name'],
+                            style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: "poppinsRegular",
+                                color: cyan)),
+                        Text("Patient",
+                            style: TextStyle(
+                                fontSize: 12.sp,
+                                fontFamily: "poppinsLight",
+                                color: black)),
+                      ],
+                    ),
+                  ],
+                ),
+                coloredMainButton(),
+              ],
+            ),
           ),
-          Text(
-            "Client was referred by Mercy Hospital,  lives with his family  of 4 kids and 1 pet dog. ",
-            style: TextStyle(fontFamily: "poppinsLight", fontSize: 12.sp),
+          SizedBox(
+            height: 26.h,
           ),
-          Text(
-            "Tap to see more",
-            style: TextStyle(fontFamily: "poppinsLight", fontSize: 12.sp),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Container(
+              height: 1.h,
+              decoration: BoxDecoration(
+                color: black.withOpacity(0.08),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 26.h,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Text("Appointment Note",style: TextStyle(fontFamily: "poppinsRegular",fontSize: 14.sp,color: black),),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(16.w, 8.h, 119.w, 18.h),
+            child: Text(socData[index]['info'],style: TextStyle(fontFamily: "poppinsLight",fontSize: 12.sp,color: black),),
           ),
         ],
       ),
-    ),
-  ]);
-}
+    );
+  }
 
-Widget Schedule(String patientName, String type, String buttonName , Color color) {
-  return Container(
-    height: 96.h,
-    padding: EdgeInsets.symmetric(horizontal: 16.w),
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      color: white,
-      borderRadius: BorderRadius.circular(12.r),
-      border: Border.all(color: grey1, width: 1),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
+  Widget listSchedule({required int index}){
+    return InkWell(
+      onTap: (){
+        if(isOpened){
+          setState(() {
+            isOpened = false;
+          });
+        }else{
+          setState(() {
+            isOpened = true;
+          });
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 26.h),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: grey1, width: 1),
+        ),
+        child: Row(
           children: [
             patientCard(),
-            SizedBox(
-              width: 16.w,
+            Spacer(
+                flex: 16
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(patientName,
+                Text(socData[index]['name'],
                     style: TextStyle(
                         fontSize: 14.sp,
                         fontFamily: "poppinsRegular",
@@ -719,7 +469,7 @@ Widget Schedule(String patientName, String type, String buttonName , Color color
                     SizedBox(
                       width: 8.w,
                     ),
-                    Text("Wed Jun 20 - 08:00 AM",
+                    Text("${socData[index]['date']} - ${socData[index]['time']}",
                         style: TextStyle(
                             fontSize: 12.sp,
                             fontFamily: "poppinsLight",
@@ -728,174 +478,347 @@ Widget Schedule(String patientName, String type, String buttonName , Color color
                 ),
               ],
             ),
+            Spacer(
+                flex: 63
+            ),
+            coloredButtons(type: socData[index]['coloredButtonName']),
+            Spacer(
+                flex: 112
+            ),
+            outlinedButton(buttonName: socData[index]['outlineButtonName']),
           ],
         ),
-        Row(
-          children: [
-            coloredButtons(type, color),
-            SizedBox(
-              width: 90.w,
-            ),
-            Container(
-              height: 38.h,
-              width: 138.w,
-              decoration: BoxDecoration(
-                color: white,
-                borderRadius: BorderRadius.circular(40),
-                border: Border.all(color: grey, width: 0.5),
-              ),
-              child: Center(
-                child: Text(buttonName,
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: "poppinsRegular",
-                        color: grey)),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
+
 }
 
-Widget patientCard(){
-  return Container(
-      height: 44.h,
-      width: 44.w,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: white,
-          width: 2,
+  Widget calender() {
+    return Row(
+      children: [
+        SvgPicture.asset(
+          "assets/svgIcons/calender.svg",
+          height: 24.h,
+          width: 24.w,
         ),
+        SizedBox(
+          width: 4.w,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "2nd Dec",
+              style: TextStyle(
+                  fontSize: 16.sp, color: grey, fontFamily: "poppinsRegular"),
+            ),
+            Text(
+              "2024, Wed",
+              style: TextStyle(
+                  fontSize: 12.sp, color: grey, fontFamily: "poppinsLight"),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget weather() {
+    return Row(
+      children: [
+        SvgPicture.asset(
+          "assets/svgIcons/weather.svg",
+          height: 24.h,
+          width: 24.w,
+        ),
+        SizedBox(
+          width: 4.w,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "14.46°C ",
+              style: TextStyle(
+                  fontSize: 16.sp, color: grey, fontFamily: "poppinsRegular"),
+            ),
+            Text(
+              "Broken clouds",
+              style: TextStyle(
+                  fontSize: 12.sp, color: grey, fontFamily: "poppinsLight"),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget profileButton() {
+    return Container(
+      height: 42.h,
+      width: 170.w,
+      padding: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: white.withOpacity(.20),
+        border: Border.all(color: white, width: 1),
+        borderRadius: BorderRadius.circular(14.r),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: white,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: Image.asset(
+                    "assets/Images/women1.png",
+                    scale: 2,
+                  ))),
+          SizedBox(
+            width: 4.w,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Jane Smith",
+                style: TextStyle(
+                    fontSize: 12.sp,
+                    fontFamily: "poppinsRegular",
+                    color: black),
+              ),
+              Text(
+                "PT",
+                style: TextStyle(
+                    fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 34.w,
+          ),
+          SvgPicture.asset(
+            "assets/svgIcons/scrollDown.svg",
+            color: grey,
+            height: 6.h,
+            width: 13.w,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget navDrawerButton() {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: white.withOpacity(.20),
+        border: Border.all(color: white, width: 1),
         borderRadius: BorderRadius.circular(8.r),
       ),
-      child: ClipRRect(
+      child: SvgPicture.asset(
+        "assets/svgIcons/filter.svg",
+        width: 10.32.w,
+        height: 8.26,
+      ),
+    );
+  }
+
+  Widget vContainer(
+      {required String visitDetail, required String count, required String svgPath }) {
+    return Container(
+      padding: EdgeInsets.all(9),
+      decoration: BoxDecoration(
+        color: white.withOpacity(.20),
+        border: Border.all(color: white, width: 1),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                visitDetail,
+                style: TextStyle(
+                    fontSize: 9.sp, fontFamily: "poppinsLight", color: grey),
+              ),
+              Text(
+                count,
+                style: TextStyle(
+                    fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
+              )
+            ],
+          ),
+          Spacer(),
+          SvgPicture.asset(
+            svgPath,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget button() {
+    return Container(
+      height: 38.h,
+      width: 121.w,
+      padding: EdgeInsets.all(9),
+      decoration: BoxDecoration(
+        color: green,
+        border: Border.all(color: white, width: 1),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Center(
+          child: Text(
+            "Upcoming",
+            style: TextStyle(
+                fontSize: 14.sp, fontFamily: "poppinsRegular", color: white),
+          )),
+    );
+  }
+
+  // Widget schedule(String patientName, String type, String buttonName,
+  //     Color color) {
+  //   return
+  //     Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 26.h),
+  //     alignment: Alignment.center,
+  //     decoration: BoxDecoration(
+  //       color: white,
+  //       borderRadius: BorderRadius.circular(12.r),
+  //       border: Border.all(color: grey1, width: 1),
+  //     ),
+  //     child: Row(
+  //       children: [
+  //         patientCard(),
+  //         Spacer(
+  //             flex: 16
+  //         ),
+  //         Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             Text(patientName,
+  //                 style: TextStyle(
+  //                     fontSize: 14.sp,
+  //                     fontFamily: "poppinsRegular",
+  //                     color: cyan)),
+  //             Row(
+  //               children: [
+  //                 SvgPicture.asset(
+  //                   "assets/svgIcons/calenderOutlined.svg",
+  //                   height: 12.h,
+  //                   width: 12.w,
+  //                   color: black,
+  //                 ),
+  //                 SizedBox(
+  //                   width: 8.w,
+  //                 ),
+  //                 Text("Wed Jun 20 - 08:00 AM",
+  //                     style: TextStyle(
+  //                         fontSize: 12.sp,
+  //                         fontFamily: "poppinsLight",
+  //                         color: black)),
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+  //         Spacer(
+  //             flex: 63
+  //         ),
+  //         //coloredButtons(type: "follow-up"),
+  //         Spacer(
+  //             flex: 112
+  //         ),
+  //         outlinedButton(buttonName: buttonName),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget patientCard() {
+    return Container(
+        height: 44.h,
+        width: 44.w,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: white,
+            width: 2,
+          ),
           borderRadius: BorderRadius.circular(8.r),
-          child: Image.asset(
-            "assets/Images/patient.png",
-            scale: 2,
-            fit: BoxFit.fill,
-          )));
-}
+        ),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(8.r),
+            child: Image.asset(
+              "assets/Images/patient.png",
+              scale: 2,
+              fit: BoxFit.fill,
+            )));
+  }
+
+  Widget coloredButtons({required String type}) {
+  Map vName =  {
+    'Follow-up' : green,
+    'Eval' : yellow,
+    'Reassessment' : blue,
+    'Discharge' : red,
+  };
+    return Container(
+      width: 120.w,
+      padding: EdgeInsets.symmetric(vertical: 6.h),
+      decoration: BoxDecoration(
+        color: vName[type],
+        borderRadius: BorderRadius.circular(40),
+      ),
+      child: Center(
+          child: Text(type, style: TextStyle(
+              fontSize: 12.sp,
+              fontFamily: "poppinsRegular",
+              color: white))),
+    );
+  }
 
 
-Widget coloredButtons(String type, Color color){
-  return Container(
-    height: 24.h,
-    width: 114.w,
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(40),
-    ),
-    child: Center(
-        child: Text(type,
+  Widget coloredMainButton() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 13.h),
+      width: 138.w,
+      decoration: BoxDecoration(
+        color: cyan,
+        borderRadius: BorderRadius.circular(40),
+      ),
+      child: Center(
+          child: Text("Start",
+              style: TextStyle(
+                  fontSize: 12.sp,
+                  fontFamily: "poppinsRegular",
+                  color: white))),
+    );
+  }
+
+  Widget outlinedButton({required String buttonName}) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 13.h),
+      width: 138.w,
+      decoration: BoxDecoration(
+        color: white,
+        borderRadius: BorderRadius.circular(40),
+        border: Border.all(color: grey, width: 0.5),
+      ),
+      child: Center(
+        child: Text(buttonName,
             style: TextStyle(
                 fontSize: 12.sp,
                 fontFamily: "poppinsRegular",
-                color: white))),
-  );
-}
-
-Widget Soc(){
-
-  return Container(
-    height: 272.h,
-    decoration: BoxDecoration(
-      color: white,
-      borderRadius: BorderRadius.circular(12.r),
-      border: Border.all(color: grey1, width: 1),
-    ),
-    child:Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(16.w, 16.h, 26.w, 16.h),
-          height: 68.h,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              color: green,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12), topRight: Radius.circular(12))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "SOC",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: "poppinsRegular",
-                        color: white),
-                  ),
-                  SvgPicture.asset(
-                    "assets/svgIcons/threeDots.svg",
-                    width: 3.w,
-                    height: 15.h,
-                    color: white,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/svgIcons/calenderOutlined.svg",
-                    height: 12.h,
-                    width: 12.w,
-                  ),
-                  SizedBox(
-                    width: 3.w,
-                  ),
-                  Text("Wed Jun 20 - 08:00 AM",
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          fontFamily: "poppinsRegular",
-                          color: white)),
-                  SizedBox(
-                    width: 21.w,
-                  ),
-                  SvgPicture.asset(
-                    "assets/svgIcons/location.svg",
-                    height: 12.h,
-                    width: 12.w,
-                  ),
-                  SizedBox(
-                    width: 3.w,
-                  ),
-                  Text("1036 Florida 50",
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          fontFamily: "poppinsRegular",
-                          color: white)),
-                ],
-              ),
-
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 26.h,
-        ),
-        Container(
-            height: 44.h,
-            width: 44.w,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: white,
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.r),
-                child: Image.asset(
-                  "assets/Images/patient.png",
-                  scale: 2,
-                  fit: BoxFit.fill,
-                ))),
-      ],
-    ),
-  );
-}
+                color: grey)),
+      ),
+    );
+  }

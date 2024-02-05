@@ -184,3 +184,156 @@ Widget SOC() {
     ),
   ]);
 }
+
+Widget tV() {
+  return Container(
+    padding: EdgeInsets.all(9),
+    decoration: BoxDecoration(
+      color: white.withOpacity(.20),
+      border: Border.all(color: white, width: 1),
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Today’s visit",
+              style: TextStyle(
+                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
+            ),
+            Text(
+              "10",
+              style: TextStyle(
+                  fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
+            )
+          ],
+        ),
+        SvgPicture.asset(
+          "assets/svgIcons/write.svg",
+        ),
+      ],
+    ),
+  );
+}
+
+Widget cV() {
+  return Container(
+    padding: EdgeInsets.all(9),
+    decoration: BoxDecoration(
+      color: white.withOpacity(.20),
+      border: Border.all(color: white, width: 1),
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex:3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                child: Text(
+                  "Completed Visits",
+                  style: TextStyle(
+                      fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
+                ),
+              ),
+              Text(
+                "10",
+                style: TextStyle(
+                    fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
+              )
+            ],
+          ),
+        ),
+        // SizedBox(
+        //   width: 8.w,
+        // ),
+        Expanded(
+          child: SvgPicture.asset(
+            "assets/svgIcons/check.svg",
+            height: 32.h,
+            width: 32.w,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget aV() {
+  return Container(
+    padding: EdgeInsets.all(9),
+    decoration: BoxDecoration(
+      color: white.withOpacity(.20),
+      border: Border.all(color: white, width: 1),
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Average Visit",
+              style: TextStyle(
+                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
+            ),
+            Text(
+              "10",
+              style: TextStyle(
+                  fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
+            )
+          ],
+        ),
+        SvgPicture.asset(
+          "assets/svgIcons/clock.svg",
+          height: 32.h,
+          width: 32.w,
+        )
+      ],
+    ),
+  );
+}
+
+Widget oC() {
+  return Container(
+    padding: EdgeInsets.all(9),
+    decoration: BoxDecoration(
+      color: white.withOpacity(.20),
+      border: Border.all(color: white, width: 1),
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Open Charts",
+              style: TextStyle(
+                  fontSize: 10.sp, fontFamily: "poppinsLight", color: grey),
+            ),
+            Text(
+              "10",
+              style: TextStyle(
+                  fontSize: 10.sp, fontFamily: "poppinsRegular", color: grey),
+            )
+          ],
+        ),
+        SvgPicture.asset(
+          "assets/svgIcons/notes.svg",
+          height: 32.h,
+          width: 32.w,
+        )
+      ],
+    ),
+  );
+}
+
