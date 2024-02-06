@@ -69,62 +69,71 @@ class _MapScreenState extends State<MapScreen> {
             SizedBox(
               height: 30.h,
             ),
-            Stack(children: [
-              Container(
-                height: MediaQuery.of(context).size.height*.83,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(
-                    color: white,
-                    width: 2.w,
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 80.h),
+                child: Stack(children: [
+                  Container(
+                    // height: MediaQuery.of(context).size.height*.83,
+                    // width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.r),
+                      border: Border.all(
+                        color: white,
+                        width: 2.w,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16.r),
+                      child: GoogleMap(
+                        initialCameraPosition: _cameraPosition,
+                        myLocationButtonEnabled: false,
+                        onMapCreated: (GoogleMapController controller) {
+                          _completer.complete(controller);
+                        },
+                      ),
+                    ),
                   ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16.r),
-                  child: GoogleMap(
-                    initialCameraPosition: _cameraPosition,
-                    myLocationButtonEnabled: false,
-                    onMapCreated: (GoogleMapController controller) {
-                      _completer.complete(controller);
-                    },
+                  Positioned(
+                    bottom: 0.h,
+                    right: 0.w,
+                    left: 0.w,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height*.27,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            black.withOpacity(0.3),
+                            black.withOpacity(0.5),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Positioned(
-                bottom: 24.h,
-                right: 0,
-                left: 109.w,
-                child: Container(
-                  height: 141.h,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: mList.length,
-                    itemBuilder: (context, index) {
-                      return slider(index: index);
-                    },
+                  Positioned(
+                    bottom: 24.h,
+                    right: 0,
+                    left: 0,
+                    child: Container(
+                      height: 141.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: mList.length,
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * .14),
+                        itemBuilder: (context, index) {
+                          return slider(index: index);
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
-              // Align(
-              //   alignment: Alignment.bottomRight,
-              //   child: Container(
-              //     margin: EdgeInsets.only(bottom: 24.h),
-              //     decoration: BoxDecoration(
-              //     ),
-              //     padding: EdgeInsets.only(left: 109.w),
-              //     height: 141.h,
-              //     child:ListView.builder(
-              //         scrollDirection: Axis.horizontal,
-              //         itemCount: mList.length,
-              //         itemBuilder: (context,index){
-              //           return slider(index: index);
-              //         }),
-              //   ),
-              // ),
-
-            ]),
+                ]),
+              ),
+            ),
           ],
         ),
       ),
@@ -134,8 +143,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget slider({required int index}) {
     return Container(
       margin: EdgeInsets.only(right: 19.w),
-      width: 361.w,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
+      // width: 361.w,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(12.r),
@@ -159,12 +168,12 @@ class _MapScreenState extends State<MapScreen> {
               Text(
                 mList[index]['direction'],
                 style: TextStyle(
-                    fontSize: 14.sp, fontFamily: "poppinsLight", color: black),
+                    fontSize: 12.sp, fontFamily: "poppinsLight", color: black),
               ),
               SizedBox(
                 height: 11.h,
               ),
-              SizedBox(
+              Container(
                   width: 108.w,
                   child: Text(
                     mList[index]['name'],
@@ -186,7 +195,7 @@ class _MapScreenState extends State<MapScreen> {
                     height: 12.h,
                   ),
                   SizedBox(
-                    width: 5.43.w,
+                    width: 5.w,
                   ),
                   Text(
                     "${mList[index]['distance']} Mtr Left",
@@ -226,6 +235,23 @@ Widget profileButton() {
       color: white.withOpacity(.20),
       border: Border.all(color: white, width: 1),
       borderRadius: BorderRadius.circular(14.r),
+      boxShadow: [
+        BoxShadow(
+          color: white.withOpacity(.10),
+          blurRadius: 1.04,
+          offset: Offset(0, 1.04),
+        ),
+        BoxShadow(
+          color: white.withOpacity(.25),
+          blurRadius: 1.04,
+          offset: Offset(0, 1.04),
+        ),
+        BoxShadow(
+          color: black.withOpacity(.04),
+          blurRadius: 10,
+          offset: Offset(0, 8.34),
+        ),
+      ],
     ),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -328,6 +354,23 @@ Widget locationContainer({required String image , required String name , require
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: white.withOpacity(.10),
+            blurRadius: 1.04,
+            offset: Offset(0, 1.04),
+          ),
+          BoxShadow(
+            color: white.withOpacity(.25),
+            blurRadius: 1.04,
+            offset: Offset(0, 1.04),
+          ),
+          BoxShadow(
+            color: black.withOpacity(.04),
+            blurRadius: 10,
+            offset: Offset(0, 0),
+          ),
+        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

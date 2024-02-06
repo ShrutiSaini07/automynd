@@ -5,6 +5,7 @@ var  red = Color(0xffD24B38);
 var blue = Color(0xff2487FE);
 var yellow = Color(0xffFFB73F);
 var cyan = Color(0xff40A0BC);
+var lightCyan = Color(0xffD9ECF2);
 var bgColor = Color(0xffF3F6FC);
 var white = Color(0xffffffff);
 var black = Color(0xff000000);
