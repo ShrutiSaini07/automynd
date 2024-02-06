@@ -22,10 +22,7 @@ class _bottomAppBarState extends State<bottomAppBar> {
     HomeScreen(),
     MapScreen(),
     LoginScreen(),
-    MapScreen(),
-    MapScreen(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +59,6 @@ class _bottomAppBarState extends State<bottomAppBar> {
       ),
     );
   }
-
   Widget HomeIcon(){
     return InkWell(
       onTap: (){
@@ -152,5 +148,6 @@ class _bottomAppBarState extends State<bottomAppBar> {
       ),
     );
   }
+
 }
 

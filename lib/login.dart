@@ -23,27 +23,69 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: bgColor,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
-          padding: EdgeInsets.only(top: 123.h, left: 200.w, right: 200.w),
-          child: Row(
-            children: [
-              Image.asset(
-                "assets/Images/logo.png",
-                width: 76.w,
-                height: 76.h,
-              ),
-              SizedBox(
-                height: 18.w,
-              ),
-              SvgPicture.asset(
-                "assets/svgIcons/autoMynd.svg",
-                width: 328,
-                height: 58.w,
-              ),
-            ],
-          ),
+          padding: EdgeInsets.only(top: 143.h, left: 200.w, right: 200.w),
+          child: Image.asset("assets/Images/logo2.png",height: 92.h,width: 462.w,),
         ),
         infoContainer(),
       ]),
+    );
+  }
+  Widget emailBlock() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          "Email Address",
+          style: TextStyle(
+              fontFamily: "poppinsRegular", fontSize: 12.sp, color: grey),
+        ),
+        SizedBox(
+          height: 8.h,
+        ),
+        Container(
+          height: 32.h,
+          decoration: BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.circular(8.r)
+          ),
+          child: TextFormField(
+            controller: emailController,
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: black,
+              fontFamily: "poppinsLight",
+            ),
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(
+                  left: 16.w, right: 16.w, top: 10.h, bottom: 10.h),
+              hintText: "Type here...",
+              border: InputBorder.none,
+              hintStyle: TextStyle(
+                fontSize: 12.sp,
+                color: grey,
+                fontFamily: "poppinsLight",
+                // letterSpacing: 1
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: black.withOpacity(.12),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: green,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+            ),
+          ),
+        ),
+
+      ],
     );
   }
 
@@ -128,65 +170,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget emailBlock() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          "Email Address",
-          style: TextStyle(
-              fontFamily: "poppinsRegular", fontSize: 12.sp, color: grey),
-        ),
-        SizedBox(
-          height: 8.h,
-        ),
-        Container(
-          height: 32.h,
-          decoration: BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.circular(8.r)
-          ),
-          child: TextFormField(
-            controller: emailController,
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: black,
-              fontFamily: "poppinsLight",
-            ),
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(
-                  left: 16.w, right: 16.w, top: 10.h, bottom: 10.h),
-              hintText: "Type here...",
-              border: InputBorder.none,
-              hintStyle: TextStyle(
-                fontSize: 12.sp,
-                color: grey,
-                fontFamily: "poppinsLight",
-                // letterSpacing: 1
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: black.withOpacity(.12),
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: green,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-            ),
-          ),
-        ),
-
-      ],
-    );
-  }
-
   Widget passwordBlock() {
     {
       return Column(
@@ -205,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 32.h,
             decoration: BoxDecoration(
                 color: white,
-              borderRadius: BorderRadius.circular(8.r)
+                borderRadius: BorderRadius.circular(8.r)
             ),
             child: TextFormField(
               controller: passwordController,

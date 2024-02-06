@@ -12,12 +12,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
-  bool _light = false;
-  bool isOpened = false;
+  bool _light = false;  //Bool value for drive mode switch
+  bool isOpened = false; //Bool value for showing soc widget in ListView
   int selectedTabIndex = -1;
 
-  var socData;
-  var socData1;
+  var socData; //List name for Upcoming listView
+  var socData1; //List name for Open Charts listView
 
   @override
   void initState() {
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
         'date': 'Wed Jun 20',
         'header': 'SOC'
       },
-    ];
+    ]; //ListView for Upcoming
     socData1 = [
       {
         'name': 'John Doe',
@@ -180,15 +180,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
         'date': 'Wed Jun 20',
         'header': 'SOC'
       },
-    ];
+    ]; //ListView for Open Charts
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    TabController _tabController = TabController(length: 2, vsync: this);
-
+    TabController _tabController = TabController(length: 2, vsync: this); //TabBar Controller
     return Scaffold(
       backgroundColor: bgColor,
       body: SingleChildScrollView(
@@ -219,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                         width: 116.w,
                       ),
                     ],
-                  ),
+                  ), // Logo
                   Spacer(
                     flex: 4,
                   ),
@@ -233,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                   ),
                   profileButton(),
                 ],
-              ),
+              ), //Row 1
               SizedBox(
                 height: 30.h,
               ),
@@ -257,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                   ),
                   driveMode(),
                 ],
-              ),
+              ), //Row 2
               SizedBox(
                 height: 28.h,
               ),
@@ -293,12 +291,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                           count: "10",
                           svgPath: "assets/svgIcons/notes.svg")),
                 ],
-              ),
-
+              ), //Row 3
               SizedBox(
                 height: 24.h,
               ),
               Container(
+                height: 945.h,
+                width: 688.w,
                 padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 31.h),
                 decoration: BoxDecoration(
                   border: Border.all(color: white, width: 1),
@@ -308,89 +307,101 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: lightCyan,
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      child: TabBar(
-                        indicator: BoxDecoration(
-                          color: green,
-                          border: Border.all(color: white, width: 2.w),
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                        controller: _tabController,
-                        //isScrollable: true,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        labelColor: Colors.white,
-                        unselectedLabelColor: Colors.black,
-                        tabs: [
-                          Tab(
-                            child: Text('Upcoming',
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontFamily: "poppinsRegular",
-                                )),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 278.w,
+                            //padding: EdgeInsets.only(right: 226.w),
+                            decoration: BoxDecoration(
+                              color: lightCyan,
+                              borderRadius: BorderRadius.circular(16.r),
+                            ),
+                            child: TabBar(
+                              indicator: BoxDecoration(
+                                color: green,
+                                border: Border.all(color: white, width: 2.w),
+                                borderRadius: BorderRadius.circular(16.r),
+                              ),
+                              controller: _tabController,
+                              //isScrollable: true,
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              labelColor: Colors.white,
+                              unselectedLabelColor: Colors.black,
+                              tabs: [
+                                Tab(
+                                  child: Text('Upcoming',
+                                      style: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontFamily: "poppinsRegular",
+                                      )),
+                                ),
+                                Tab(
+                                  child: Text('Open Charts',
+                                      style: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontFamily: "poppinsRegular",
+                                      )),
+                                ),
+                              ],
+                            ),
                           ),
-                          Tab(
-                            child: Text('Open Charts',
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontFamily: "poppinsRegular",
-                                )),
-                          ),
+                          Expanded(
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: socData.length,
+                                    scrollDirection: Axis.vertical,
+                                    padding: EdgeInsets.zero,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            if (isOpened) {
+                                              isOpened = false;
+                                            } else {
+                                              isOpened = true;
+                                              selectedTabIndex = index;
+                                            }
+                                          });
+                                        },
+                                        child: isOpened && selectedTabIndex == index
+                                            ? soc(index: index)
+                                            : listSchedule(index: index),
+                                      );
+                                    }),
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: socData.length,
+                                    scrollDirection: Axis.vertical,
+                                    padding: EdgeInsets.zero,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            if (isOpened) {
+                                              isOpened = false;
+                                            } else {
+                                              isOpened = true;
+                                              selectedTabIndex = index;
+                                            }
+                                          });
+                                        },
+                                        child: isOpened && selectedTabIndex == index
+                                            ? soc(index: index)
+                                            : listSchedule(index: index),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: socData.length,
-                        scrollDirection: Axis.vertical,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (isOpened) {
-                                  isOpened = false;
-                                } else {
-                                  isOpened = true;
-                                  selectedTabIndex = index;
-                                }
-                              });
-                            },
-                            child: isOpened && selectedTabIndex == index
-                                ? soc(index: index)
-                                : listSchedule(index: index),
-                          );
-                        }),
-                    // Expanded(
-                    //   child: TabBarView(
-                    //     controller: _tabController,
-                    //     children: [
-                    //       ListView.builder(
-                    //         itemCount: 10,
-                    //         itemBuilder: (context, index) {
-                    //           return ListTile(
-                    //             title: Text('fgbnm,.'),
-                    //           );
-                    //         },
-                    //       ),
-                    //       ListView.builder(
-                    //         itemCount: 10,
-                    //         itemBuilder: (context, index) {
-                    //           return ListTile(
-                    //             title: Text('fgbnm,.'),
-                    //           );
-                    //         },
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
                   ],
                 ),
               ),
@@ -868,10 +879,7 @@ Widget navDrawerButton() {
   );
 }
 
-Widget vContainer(
-    {required String visitDetail,
-    required String count,
-    required String svgPath}) {
+Widget vContainer({required String visitDetail,required String count, required String svgPath}) {
   return Container(
     padding: EdgeInsets.all(9),
     decoration: BoxDecoration(

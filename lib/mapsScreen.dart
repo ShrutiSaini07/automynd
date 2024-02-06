@@ -113,7 +113,7 @@ class _MapScreenState extends State<MapScreen> {
                         borderRadius: BorderRadius.circular(16.r),
                       ),
                     ),
-                  ),
+                  ), //shadow Container
                   Positioned(
                     bottom: 24.h,
                     right: 0,
@@ -126,10 +126,10 @@ class _MapScreenState extends State<MapScreen> {
                         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * .14),
                         itemBuilder: (context, index) {
                           return slider(index: index);
-                        },
+                        }, //Widget(slider) calling here
                       ),
                     ),
-                  ),
+                  ), //ListView
 
                 ]),
               ),
@@ -139,7 +139,6 @@ class _MapScreenState extends State<MapScreen> {
       ),
     );
   }
-
   Widget slider({required int index}) {
     return Container(
       margin: EdgeInsets.only(right: 19.w),
@@ -222,7 +221,6 @@ class _MapScreenState extends State<MapScreen> {
       ),
     );
   }
-
 }
 
 
@@ -301,6 +299,7 @@ Widget profileButton() {
     ),
   );
 }
+
 Widget backButton() {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 13.h),
@@ -346,6 +345,7 @@ Widget backButton() {
     ),
   );
 }
+
 Widget locationContainer({required String image , required String name , required String distance , required String direction}) {
   return
     Container(

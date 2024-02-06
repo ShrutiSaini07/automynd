@@ -9,10 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
-
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ScreenUtilInit(
+        designSize: const Size(744, 1133),
+        builder: (_ , child) {
+          return MaterialApp(
+            home: HomeScreen(),
+            debugShowCheckedModeBanner: false,
+          );
+        }
+    ),
+  );
 }
+
 
 // void main() {
 //   runApp(
@@ -22,7 +32,7 @@ void main() {
 //           return DevicePreview(
 //               enabled: !kReleaseMode,
 //               builder: (context) => MaterialApp(
-//                 home: BottomAppBar(),
+//                 home: SoapNote(),
 //                 useInheritedMediaQuery: true,
 //                 debugShowCheckedModeBanner: false,
 //               ));
@@ -30,25 +40,3 @@ void main() {
 //     ),
 //   );
 // }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-      return ScreenUtilInit(
-        designSize: const Size(744, 1133),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (_, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: child,
-          );
-        },
-        child: LoginScreen(),
-      );
-    }
-}
-
