@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import 'dialogBox.dart';
 import 'gridView.dart';
 
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
           ), //taken reference of iPad(mini) 6th gen having 744 X 1133 pixels
           builder: (_ , child) {
             return MaterialApp(
-              home: CardView(),
+              home: DialogScreen(),
               debugShowCheckedModeBanner: false,
             );
           }
