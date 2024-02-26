@@ -286,6 +286,7 @@ class _CardViewState extends State<CardView> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.r),
                   child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(8.r),
                     value: percentage,
                     backgroundColor: Color(0xffF7F9FD),
                     valueColor: AlwaysStoppedAnimation<Color>(progressColor),
