@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_mynds/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,14 +8,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'constants.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+class MapsPage extends StatefulWidget {
+  const MapsPage({super.key});
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<MapsPage> createState() => _MapsPageState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapsPageState extends State<MapsPage> {
 
   var mList ;
   Completer<GoogleMapController> _completer = Completer();
@@ -54,16 +55,17 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      body: Padding(
+      body:
+      Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: 32.w,vertical: 26.h),
+            isMobile? EdgeInsets.symmetric(horizontal: 16.w,vertical: 16.h) : EdgeInsets.symmetric(horizontal: 32.w,vertical: 26.h),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 backButton(),
-                profileButton(),
+                isMobile? profileCard() : profileButton(),
               ],
             ),
             SizedBox(
@@ -74,8 +76,6 @@ class _MapScreenState extends State<MapScreen> {
                 padding: EdgeInsets.only(bottom: 80.h),
                 child: Stack(children: [
                   Container(
-                    // height: MediaQuery.of(context).size.height*.83,
-                    // width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.r),
                       border: Border.all(
@@ -99,7 +99,7 @@ class _MapScreenState extends State<MapScreen> {
                     right: 0.w,
                     left: 0.w,
                     child: Container(
-                      height: MediaQuery.of(context).size.height*.27,
+                      height: MediaQuery.of(context).size.height*.27.h,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -114,7 +114,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                   ), //shadow Container
-                  Positioned(
+                   Positioned(
                     bottom: 24.h,
                     right: 0,
                     left: 0,
@@ -123,13 +123,13 @@ class _MapScreenState extends State<MapScreen> {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: mList.length,
-                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * .14),
+                        padding: EdgeInsets.only(left: isMobile? 144.w:109.w),
                         itemBuilder: (context, index) {
                           return slider(index: index);
                         }, //Widget(slider) calling here
                       ),
                     ),
-                  ), //ListView
+                  )
 
                 ]),
               ),
@@ -139,9 +139,10 @@ class _MapScreenState extends State<MapScreen> {
       ),
     );
   }
+
   Widget slider({required int index}) {
     return Container(
-      margin: EdgeInsets.only(right: 19.w),
+      margin: EdgeInsets.only(right:19.w),
       // width: 361.w,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
@@ -298,6 +299,35 @@ Widget profileButton() {
       ],
     ),
   );
+}
+
+Widget profileCard() {
+  return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: white,
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0xFF98A0B1).withOpacity(.15),
+            blurRadius: 20,
+            offset: Offset(0, 10),
+          ),
+          BoxShadow(
+            color: Color(0xFF98A0B1).withOpacity(.15),
+            blurRadius: 20,
+            offset: Offset(0, 10),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.r),
+          child: Image.asset(
+            "assets/Images/women1.png",
+            scale: 2,
+          )));
 }
 
 Widget backButton() {

@@ -11,6 +11,8 @@ var white = Color(0xffffffff);
 var black = Color(0xff000000);
 var grey  = Color(0xff50545D);
 var grey1 = Color(0xffEBEEF2);
+var white2 = Color(0xffF1F1F1);
+
 const Color primary_color = Color(0xff93ACFE);
 
 const String google_maps_api = "AIzaSyDo3rScW879sXmx3_cMPVflfrVJKzPrC0s";

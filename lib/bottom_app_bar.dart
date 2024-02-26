@@ -1,12 +1,12 @@
-import 'package:auto_mynds/homePage.dart';
-import 'package:auto_mynds/login.dart';
-import 'package:auto_mynds/mapsScreen.dart';
+import 'package:auto_mynds/card_view.dart';
+import 'package:auto_mynds/home_page.dart';
+import 'package:auto_mynds/login_page.dart';
+import 'package:auto_mynds/main.dart';
+import 'package:auto_mynds/maps_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'constants.dart';
-
-
 class bottomAppBar extends StatefulWidget {
   const bottomAppBar({super.key});
 
@@ -19,9 +19,9 @@ class _bottomAppBarState extends State<bottomAppBar> {
   int selectedPageIndex = 0;
 
   List<Widget> pagesList = [
-    HomeScreen(),
-    MapScreen(),
-    LoginScreen(),
+    HomePage(),
+    CardView(),
+
   ];
 
   @override
@@ -30,7 +30,7 @@ class _bottomAppBarState extends State<bottomAppBar> {
       body: pagesList[selectedPageIndex],
       extendBody: true,
       bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 32.w, vertical: 24.h),
+        margin: EdgeInsets.symmetric(horizontal: isMobile? 15.w:32.w, vertical: isMobile? 16.h:24.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
         decoration: BoxDecoration(
           color: white,

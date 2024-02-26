@@ -1,35 +1,41 @@
-import 'package:auto_mynds/homePage.dart';
+import 'package:auto_mynds/home_page.dart';
+import 'package:auto_mynds/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'constants.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+      Scaffold(
       backgroundColor: bgColor,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
-          padding: EdgeInsets.only(top: 143.h, left: 200.w, right: 200.w),
-          child: Image.asset("assets/Images/logo2.png",height: 92.h,width: 462.w,),
+          padding: EdgeInsets.only(top:isMobile? 90.h:143.h,right: isMobile? 125.w:143.w,left: isMobile? 125.w:143.w),
+          child: Image.asset(
+            "assets/Images/logo2.png",
+          ),
         ),
         infoContainer(),
       ]),
     );
   }
+
+
   Widget emailBlock() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget infoContainer() {
     return Padding(
-      padding: EdgeInsets.only(top: 30.h, right: 40.w,left: 40.w,bottom: 120.h),
+      padding: EdgeInsets.only(top: 30.h, right: isMobile?20.w:40.w,left: isMobile?20.w:40.w,bottom: isMobile?60.h:120.h),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
@@ -245,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 Widget loginButton() {
   return Container(
-    padding: EdgeInsets.symmetric(vertical: 13.h,horizontal: 125.w),
+    padding: EdgeInsets.symmetric(vertical: 13.h,horizontal: isMobile? 75.w:125.w),
     decoration: BoxDecoration(
       color: cyan,
       borderRadius: BorderRadius.circular(40),

@@ -1,5 +1,5 @@
 import 'package:auto_mynds/constants.dart';
-import 'package:auto_mynds/homePage.dart';
+import 'package:auto_mynds/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -425,7 +425,7 @@ class _TabBarScreenState extends State<TabBarScreen>
                     ),
                   ],
                 ),
-                coloredMainButton(),
+                //coloredMainButton(filledButtonName: ),
               ],
             ),
           ),
@@ -519,7 +519,7 @@ class _TabBarScreenState extends State<TabBarScreen>
               ],
             ),
             Spacer(flex: 63),
-            coloredButtons(type: socData[index]['coloredButtonName']),
+            coloredButtons(type: socData[index]['filledButtonName']),
             Spacer(flex: 112),
             outlinedButton(buttonName: socData[index]['outlineButtonName']),
           ],
