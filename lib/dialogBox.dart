@@ -20,12 +20,12 @@ class _DialogScreenState extends State<DialogScreen> {
     return Scaffold(
       backgroundColor: bgColor,
       body: Center(
-        child: popUpUi2(),
+        child: popUpUi3(),
       ),
     );
   }
 
-  Widget popUpUi(){
+  Widget popUpFollowUp(){
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 169.w,vertical: 340.h),
       child: Container(
@@ -39,7 +39,7 @@ class _DialogScreenState extends State<DialogScreen> {
             Align(
               alignment: Alignment.topRight,
               child: Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50.r),
                   border: Border.all(color: black, width: 1.35.w),
@@ -114,15 +114,18 @@ class _DialogScreenState extends State<DialogScreen> {
         ),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.r),
-                  border: Border.all(color: black, width: 1.35.w),
+            InkWell(
+              onTap: (){},
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.r),
+                    border: Border.all(color: black, width: 1.35.w),
+                  ),
+                  child: SvgPicture.asset("assets/svgIcons/close.svg"),
                 ),
-                child: SvgPicture.asset("assets/svgIcons/close.svg"),
               ),
             ),
             SizedBox(
@@ -195,13 +198,16 @@ class _DialogScreenState extends State<DialogScreen> {
                 Text("Select the template type",style: TextStyle(
                   fontFamily: "poppinsRegular",fontSize: 16.sp,
                 ),),
-                Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.r),
-                    border: Border.all(color: black, width: 1.35.w),
+                InkWell(
+                  onTap: (){},
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50.r),
+                      border: Border.all(color: black, width: 1.35.w),
+                    ),
+                    child: SvgPicture.asset("assets/svgIcons/close.svg"),
                   ),
-                  child: SvgPicture.asset("assets/svgIcons/close.svg"),
                 ),
               ],
             ),
@@ -247,6 +253,71 @@ class _DialogScreenState extends State<DialogScreen> {
 
           ],
         )
+      ),
+    );
+  }
+
+  Widget popUpUi3(){
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 169.w,vertical: 340.h),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(24.r),
+        ),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: (){},
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.r),
+                    border: Border.all(color: black, width: 1.35.w),
+                  ),
+                  child: SvgPicture.asset("assets/svgIcons/close.svg"),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 3.59.h,
+            ),
+            Center(child: Text("Success!",style: TextStyle(fontFamily: "poppinsRegular",fontSize: 24.sp,color: green),)),
+            SizedBox(
+              height: 15.h,
+            ),
+            Stack(children:[ Image.asset("assets/Images/notebook.png",),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 53.w),
+                child: Text(
+                  'You will be redirected to SOAP Note, once processing is finished',textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 12.sp, fontFamily: "poppinsRegular",color: yellow),
+                ),
+              ),
+            ]),
+            SizedBox(
+              height: 29.h,
+            ),
+            InkWell(
+              onTap: (){},
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 144.w,vertical: 18.h),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(13.r),
+                    color: cyan
+                ),
+                child: Text("Go To Home",style: GoogleFonts.roboto(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: white,
+                ),),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

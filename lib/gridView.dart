@@ -10,25 +10,17 @@ class MyGridView extends StatefulWidget {
   _MyGridViewState createState() => _MyGridViewState();
 }
 
-class GridItem {
-  String title;
-  String description;
-  String value;
-
-  GridItem({required this.title, required this.description, required this.value});
-}
 class _MyGridViewState extends State<MyGridView> {
-  List<GridItem> gridItems = [
-    GridItem(title: "Medical History of Review", description: "Good Start, carry on !", value: "2/10"),
-    GridItem(title: "Another Title", description: "Another Description", value: "5/10"),
-    GridItem(title: "Yet Another Title", description: "Yet Another Description", value: "9/10"),
-    GridItem(title: "Medical History of Review", description: "Good Start, carry on !", value: "2/10"),
-    GridItem(title: "Another Title", description: "Another Description", value: "5/10"),
-    GridItem(title: "Yet Another Title", description: "Yet Another Description", value: "9/10"),
-    GridItem(title: "Medical History of Review", description: "Good Start, carry on !", value: "2/10"),
-    GridItem(title: "Another Title", description: "Another Description", value: "5/10"),
-    GridItem(title: "Yet Another Title", description: "Yet Another Description", value: "9/10"),
-
+  List<Map<String, String>> gridItems = [
+    {"title": "Medical History of Review", "description": "Good Start, carry on !", "value": "2/10"},
+    {"title": "Another Title", "description": "Another Description", "value": "5/10"},
+    {"title": "Yet Another Title", "description": "Yet Another Description", "value": "9/10"},
+    {"title": "Medical History of Review", "description": "Good Start, carry on !", "value": "2/10"},
+    {"title": "Another Title", "description": "Another Description", "value": "5/10"},
+    {"title": "Yet Another Title", "description": "Yet Another Description", "value": "9/10"},
+    {"title": "Medical History of Review", "description": "Good Start, carry on !", "value": "2/10"},
+    {"title": "Another Title", "description": "Another Description", "value": "5/10"},
+    {"title": "Yet Another Title", "description": "Yet Another Description", "value": "9/10"},
   ];
 
   @override
@@ -53,11 +45,10 @@ class _MyGridViewState extends State<MyGridView> {
     );
   }
 
-
   Widget gridCardUi(int index) {
-    GridItem item = gridItems[index];
+    Map<String, String> item = gridItems[index];
 
-    List<String> parts = item.value.split('/');
+    List<String> parts = item["value"]!.split('/');
     double numerator = double.parse(parts[0]);
     double denominator = double.parse(parts[1]);
 
@@ -93,7 +84,7 @@ class _MyGridViewState extends State<MyGridView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                item.title,
+                item["title"]!,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontFamily: "poppinsRegular",
@@ -107,7 +98,7 @@ class _MyGridViewState extends State<MyGridView> {
                   color: Color(0xffD9ECF2),
                   borderRadius: BorderRadius.circular(40.r),
                 ),
-                child: Icon(Icons.ac_unit),
+                child: Icon(Icons.favorite,color: red,size: 16),
               ),
             ],
           ),
@@ -117,7 +108,7 @@ class _MyGridViewState extends State<MyGridView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    item.description,
+                    item["description"]!,
                     style: GoogleFonts.roboto(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
@@ -125,7 +116,7 @@ class _MyGridViewState extends State<MyGridView> {
                     ),
                   ),
                   Text(
-                    item.value,
+                    item["value"]!,
                     style: GoogleFonts.roboto(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
@@ -137,13 +128,17 @@ class _MyGridViewState extends State<MyGridView> {
               SizedBox(
                 height: 8.h,
               ),
-              LinearPercentIndicator(
-                animation: true,
-                animationDuration: 1000, // Adjust the animation duration as needed
-                lineHeight: 12.h,
-                percent: percentage,
-                progressColor: progressColor,
-                backgroundColor: Color(0xffF7F9FD),
+              Container(
+                height: 12.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(8.r),
+                    value: percentage,
+                    backgroundColor: Color(0xffF7F9FD),
+                    valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+                  ),
+                ),
               ),
             ],
           )
@@ -151,5 +146,4 @@ class _MyGridViewState extends State<MyGridView> {
       ),
     );
   }
-
 }

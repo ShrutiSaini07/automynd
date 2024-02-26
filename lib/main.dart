@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           ), //taken reference of iPad(mini) 6th gen having 744 X 1133 pixels
           builder: (_ , child) {
             return MaterialApp(
-              home: DialogScreen(),
+              home: CardView(),
               debugShowCheckedModeBanner: false,
             );
           }

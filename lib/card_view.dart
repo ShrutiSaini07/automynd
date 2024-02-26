@@ -17,53 +17,19 @@ class CardView extends StatefulWidget {
   State<CardView> createState() => _CardViewState();
 }
 
-class GridItem {
-  String title;
-  String description;
-  String value;
 
-  GridItem(
-      {required this.title, required this.description, required this.value});
-}
 
 class _CardViewState extends State<CardView> {
-  List<GridItem> gridItems = [
-    GridItem(
-        title: "Medical gfjhbsjdvbgjhaejHistory of Review",
-        description: "Good Start, carry on !",
-        value: "2/10"),
-    GridItem(
-        title: "Another Title",
-        description: "Another Description",
-        value: "5/10"),
-    GridItem(
-        title: "Yet Another Title",
-        description: "Yet Another Description",
-        value: "9/10"),
-    GridItem(
-        title: "Medical History of Review",
-        description: "Good Start, carry on !",
-        value: "2/10"),
-    GridItem(
-        title: "Another Title",
-        description: "Another Description",
-        value: "5/10"),
-    GridItem(
-        title: "Yet Another Title",
-        description: "Yet Another Description",
-        value: "9/10"),
-    GridItem(
-        title: "Medical History of Review",
-        description: "Good Start, carry on !",
-        value: "2/10"),
-    GridItem(
-        title: "Another Title",
-        description: "Another Description",
-        value: "5/10"),
-    GridItem(
-        title: "Yet Another Title",
-        description: "Yet Another Description",
-        value: "9/10"),
+  List<Map<String, String>> gridItems = [
+    {"title": "Medical History of Review", "description": "Good Start, carry on !", "value": "2/10"},
+    {"title": "Another Title", "description": "Another Description", "value": "5/10"},
+    {"title": "Yet Another Title", "description": "Yet Another Description", "value": "9/10"},
+    {"title": "Medical History of Review", "description": "Good Start, carry on !", "value": "2/10"},
+    {"title": "Another Title", "description": "Another Description", "value": "5/10"},
+    {"title": "Yet Another Title", "description": "Yet Another Description", "value": "9/10"},
+    {"title": "Medical History of Review", "description": "Good Start, carry on !", "value": "2/10"},
+    {"title": "Another Title", "description": "Another Description", "value": "5/10"},
+    {"title": "Yet Another Title", "description": "Yet Another Description", "value": "9/10"},
   ];
 
   TextEditingController _searchController = TextEditingController();
@@ -201,9 +167,9 @@ class _CardViewState extends State<CardView> {
   }
 
   Widget gridCardUi(int index) {
-    GridItem item = gridItems[index];
+    Map<String, String> item = gridItems[index];
 
-    List<String> parts = item.value.split('/');
+    List<String> parts = item["value"]!.split('/');
     double numerator = double.parse(parts[0]);
     double denominator = double.parse(parts[1]);
 
@@ -218,16 +184,15 @@ class _CardViewState extends State<CardView> {
     }
 
     return Container(
-      // height: 200.h,EdgeInsets.fromLTRB(16.w, 24.h, 16.w, 16.h),
       padding: EdgeInsets.fromLTRB(16.w, 24.h, 16.w, 16.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: black.withOpacity(.30),
+            color: Colors.black.withOpacity(.10),
             blurRadius: 80.6,
-            spreadRadius: -30,
+            spreadRadius: 20.0,
             offset: Offset(0, 15),
           ),
         ],
@@ -237,22 +202,25 @@ class _CardViewState extends State<CardView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                // color: Colors.green,
-                width: 230,
-                child: Text(
-                  item.title,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontFamily: "poppinsRegular",
-                    color: grey,
-                  ),
+              Text(
+                item["title"]!,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontFamily: "poppinsRegular",
+                  color: grey,
                 ),
               ),
-              Icon(Icons.favorite_rounded,color: red,),
+              Container(
+                height: 28.h,
+                width: 28.w,
+                decoration: BoxDecoration(
+                  color: Color(0xffD9ECF2),
+                  borderRadius: BorderRadius.circular(40.r),
+                ),
+                child: Icon(Icons.favorite,color: red,size: 16),
+              ),
             ],
           ),
           Column(
@@ -261,7 +229,7 @@ class _CardViewState extends State<CardView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    item.description,
+                    item["description"]!,
                     style: GoogleFonts.roboto(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
@@ -269,7 +237,7 @@ class _CardViewState extends State<CardView> {
                     ),
                   ),
                   Text(
-                    item.value,
+                    item["value"]!,
                     style: GoogleFonts.roboto(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
