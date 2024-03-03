@@ -42,12 +42,16 @@ dependencies:
   device_preview:
   responsive_builder:
   google_fonts:
+  lottie:
+  timeline_tile:
   percent_indicator:
   awesome_dialog:
 
   flutter_polyline_points: ^1.0.0
   google_maps_flutter: ^2.1.7
   location:
+
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +79,7 @@ flutter:
   assets:
     - assets/Images/
     - assets/svgIcons/
+    - assets/Lottie/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

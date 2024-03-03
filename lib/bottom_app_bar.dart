@@ -1,4 +1,4 @@
-import 'package:auto_mynds/card_view.dart';
+import 'package:auto_mynds/Modules/follow_up_note/card_view.dart';
 import 'package:auto_mynds/home_page.dart';
 import 'package:auto_mynds/login_page.dart';
 import 'package:auto_mynds/main.dart';

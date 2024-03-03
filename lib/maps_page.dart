@@ -64,7 +64,7 @@ class _MapsPageState extends State<MapsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                backButton(),
+                backButton(context),
                 isMobile? profileCard() : profileButton(),
               ],
             ),
@@ -330,48 +330,53 @@ Widget profileCard() {
           )));
 }
 
-Widget backButton() {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 13.h),
-    decoration: BoxDecoration(
-      color: white.withOpacity(.36),
-      border: Border.all(color: white, width: 1),
-      boxShadow: [
-        BoxShadow(
-          color: white.withOpacity(.10),
-          blurRadius: 1.04,
-          offset: Offset(0, 1.04),
-        ),
-        BoxShadow(
-          color: white.withOpacity(.25),
-          blurRadius: 1.04,
-          offset: Offset(0, 1.04),
-        ),
-        BoxShadow(
-          color: black.withOpacity(.04),
-          blurRadius: 10,
-          offset: Offset(0, 0),
-        ),
-      ],
-      borderRadius: BorderRadius.circular(8.r),
-    ),
-    child: Row(
-      children: [
-        SvgPicture.asset(
-          "assets/svgIcons/backIcon.svg",
-          color: cyan,
-          width: 25.w,
-          height: 13.w,
-        ),
-        SizedBox(
-          width: 10.w,
-        ),
-        Text(
-          "Back",
-          style: TextStyle(
-              fontSize: 14.sp, fontFamily: "poppinsLight", color: black),
-        ),
-      ],
+Widget backButton(BuildContext context) {
+  return InkWell(
+    onTap: (){
+      Navigator.pop(context);
+    },
+    child: Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 13.h),
+      decoration: BoxDecoration(
+        color: white.withOpacity(.36),
+        border: Border.all(color: white, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: white.withOpacity(.10),
+            blurRadius: 1.04,
+            offset: Offset(0, 1.04),
+          ),
+          BoxShadow(
+            color: white.withOpacity(.25),
+            blurRadius: 1.04,
+            offset: Offset(0, 1.04),
+          ),
+          BoxShadow(
+            color: black.withOpacity(.04),
+            blurRadius: 10,
+            offset: Offset(0, 0),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            "assets/svgIcons/backIcon.svg",
+            color: cyan,
+            width: 25.w,
+            height: 13.w,
+          ),
+          SizedBox(
+            width: 10.w,
+          ),
+          Text(
+            "Back",
+            style: TextStyle(
+                fontSize: 14.sp, fontFamily: "poppinsLight", color: black),
+          ),
+        ],
+      ),
     ),
   );
 }

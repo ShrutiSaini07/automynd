@@ -7,8 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'dialogBox.dart';
-import 'main.dart';
+import '../../dialogBox.dart';
+import '../../main.dart';
 
 class CardView extends StatefulWidget {
   const CardView({super.key});

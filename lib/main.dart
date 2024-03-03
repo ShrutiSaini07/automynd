@@ -1,18 +1,19 @@
 
+import 'package:auto_mynds/Modules/follow_up_note/pages/exmaple.dart';
+import 'package:auto_mynds/follow_up_note.dart';
 import 'package:auto_mynds/bottom_app_bar.dart';
-import 'package:auto_mynds/card_view.dart';
+import 'package:auto_mynds/Modules/follow_up_note/card_view.dart';
 import 'package:auto_mynds/home_page.dart';
 import 'package:auto_mynds/login_page.dart';
 import 'package:auto_mynds/maps_page.dart';
-import 'package:auto_mynds/tabBar.dart';
+import 'package:auto_mynds/page_view.dart';
+import 'package:auto_mynds/stepper.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-import 'dialogBox.dart';
-import 'gridView.dart';
 
 
 void main() {
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           ), //taken reference of iPad(mini) 6th gen having 744 X 1133 pixels
           builder: (_ , child) {
             return MaterialApp(
-              home: CardView(),
+              home: PageViewScreen(),
               debugShowCheckedModeBanner: false,
             );
           }
